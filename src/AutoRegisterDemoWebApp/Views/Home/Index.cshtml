@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model List<string>
+
+<div class="text-center">
+    <h3 class="display-5">Completed validations:</h3>
+
+    @foreach(var msg in Model)
+    {
+        <p>@msg</p>
+    }
+
+</div>
