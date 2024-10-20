@@ -3,16 +3,17 @@ using Common.Extensions;
 
 namespace ApplicationLogic.Services.Validation.Validators;
 
-[AutoRegister(Lifetime.Scoped, RegisterAs.Interface)]
+[AutoRegister(Lifetime.Transient, RegisterAs.Interface)]
 internal class Validator3 : IValidator
 {
-    public string Name => "CCC";
+    public Guid Id { get; } = Guid.NewGuid();
+    public string Name { get; } = "CCC";
 
     public void Validate(ValidationContext validationContext)
     {
         var timestamp = DateTime.Now.ToHHMMSS();
 
         validationContext.AddCompletedValidation(
-            $"{timestamp}: Validation completed by {Name}");
+            $"{timestamp}: Validation completed by {Name}. ID: {Id}");
     }
 }
