@@ -1,5 +1,5 @@
 using ApplicationLogic.Bootstrap;
-using Common.Bootstrap;
+using Common.Extensions.Bootstrap;
 
 namespace AutoRegisterDemoWebApp;
 

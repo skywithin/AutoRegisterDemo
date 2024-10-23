@@ -1,4 +1,4 @@
-﻿namespace Common.Bootstrap;
+﻿namespace Common.Attributes;
 
 public enum Lifetime
 {

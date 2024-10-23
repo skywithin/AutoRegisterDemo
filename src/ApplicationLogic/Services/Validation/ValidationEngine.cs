@@ -1,5 +1,5 @@
 ﻿using ApplicationLogic.Services.Validation.Validators;
-using Common.Bootstrap;
+using Common.Attributes;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ApplicationLogic.Services.Validation;

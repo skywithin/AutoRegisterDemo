@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Common.Attributes;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace Common.Bootstrap;
+namespace Common.Extensions.Bootstrap;
 public static class ServiceCollectionExtensions
 {
     /// <summary>
