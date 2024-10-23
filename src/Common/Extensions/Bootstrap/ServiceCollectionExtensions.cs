@@ -78,7 +78,10 @@ public static class ServiceCollectionExtensions
         }
         catch (ReflectionTypeLoadException ex)
         {
-            return ex.Types.Where(t => t is not null).ToArray();
+            return ex.Types
+                     .Select(t => t!)
+                     .Where(t => t is not null)
+                     .ToArray();
         }
     }
 }
