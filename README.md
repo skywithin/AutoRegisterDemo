@@ -1,4 +1,4 @@
-# Auto-Wired Services Extension
+# Auto-Wired Services
 
 This extension method simplifies service registration in an ASP.NET Core application by automatically registering services that are flagged with the `AutoWireAttribute`. It supports various lifetimes (`Scoped`, `Transient`, and `Singleton`) and allows for registration as either the implementation type (self) or as an interface.
 
