@@ -7,19 +7,19 @@ public static class ServiceCollectionExtensions
     /// <summary>
     /// Automatically register services flagged with AutoRegisterAttribute
     /// </summary>
-    public static IServiceCollection AddAutoRegisteredServices(this IServiceCollection services)
+    public static IServiceCollection AddAutoWiredServices(this IServiceCollection services)
     {
         var autoRegistrations =
             AppDomain.CurrentDomain
-                .GetAssemblies()
+                .GetAssemblies() // TODO: This is potentially problematic. In order to scan multiple assemblies, they (assemblies) must be referenced before AddAutoWiredServices method is called.
                 .SelectMany(s => s.GetLoadableTypes())
                 .Where(type =>
-                    type.IsDefined(typeof(AutoRegisterAttribute), inherit: false) &&
+                    type.IsDefined(typeof(AutoWireAttribute), inherit: false) &&
                     !type.IsAbstract &&
                     !type.IsInterface)
                 .Select(type =>
                 {
-                    var attr = type.GetCustomAttribute<AutoRegisterAttribute>();
+                    var attr = type.GetCustomAttribute<AutoWireAttribute>();
 
                     return new
                     {

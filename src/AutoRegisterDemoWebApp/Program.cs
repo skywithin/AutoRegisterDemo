@@ -1,4 +1,5 @@
 using ApplicationLogic.Bootstrap;
+using Common.Bootstrap;
 
 namespace AutoRegisterDemoWebApp;
 
@@ -10,7 +11,8 @@ public class Program
 
         // Add services to the container.
         builder.Services
-            .AddApplicationLogic() // Bootstrap application logic
+            .AddApplicationLogic()
+            .AddAutoWiredServices() // Needs to be called after all assemblies have been "touched"
             .AddControllersWithViews();
 
         var app = builder.Build();

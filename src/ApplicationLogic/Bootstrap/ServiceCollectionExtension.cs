@@ -7,7 +7,7 @@ public static class ServiceCollectionExtension
 {
     public static IServiceCollection AddApplicationLogic(this IServiceCollection services)
     {
-        services.AddAutoRegisteredServices(); // Automatically register all services flagged with AutoRegister attribute
+        // Add custom registrations 
 
         return services;
     }

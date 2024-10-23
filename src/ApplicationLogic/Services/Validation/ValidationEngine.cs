@@ -9,7 +9,7 @@ public interface IValidationEngine
     ValidationContext Execute(ValidationContext context);
 }
 
-[AutoRegister(Lifetime.Scoped, RegisterAs.Interface)]
+[AutoWire(Lifetime.Scoped, RegisterAs.Interface)]
 internal class ValidationEngine : IValidationEngine
 {
     private readonly IEnumerable<IValidator> _validators;
