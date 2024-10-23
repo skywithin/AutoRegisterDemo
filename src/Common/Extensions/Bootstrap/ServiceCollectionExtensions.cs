@@ -6,7 +6,7 @@ namespace Common.Extensions.Bootstrap;
 public static class ServiceCollectionExtensions
 {
     /// <summary>
-    /// Automatically register services flagged with AutoRegisterAttribute
+    /// Automatically register services flagged with AutoWireAttribute
     /// </summary>
     public static IServiceCollection AddAutoWiredServices(this IServiceCollection services)
     {
