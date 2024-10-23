@@ -12,7 +12,7 @@ public class Program
         // Add services to the container.
         builder.Services
             .AddApplicationLogic()
-            .AddAutoWiredServices() // Needs to be called after all assemblies have been "touched"
+            .AddAutoWiredServices() // Needs to be called after all assemblies have been loaded
             .AddControllersWithViews();
 
         var app = builder.Build();

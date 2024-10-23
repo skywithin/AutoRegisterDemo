@@ -12,7 +12,7 @@ public static class ServiceCollectionExtensions
     {
         var autoRegistrations =
             AppDomain.CurrentDomain
-                .GetAssemblies() // TODO: This is potentially problematic. In order to scan multiple assemblies, they (assemblies) must be referenced before AddAutoWiredServices method is called.
+                .GetAssemblies() // TODO: This is potentially problematic. In order to scan multiple assemblies, they (assemblies) must be loaded before AddAutoWiredServices method is called.
                 .SelectMany(s => s.GetLoadableTypes())
                 .Where(type =>
                     type.IsDefined(typeof(AutoWireAttribute), inherit: false) &&
