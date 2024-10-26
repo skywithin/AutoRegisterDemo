@@ -3,7 +3,7 @@ using Common.Extensions.Datetime;
 
 namespace ApplicationLogic.Services.Validation.Validators;
 
-[AutoWire(Lifetime.Transient, RegisterAs.Interface)]
+[AutoWire(Lifetime.Scoped, RegisterAs.Interface)]
 internal class Validator3 : IValidator
 {
     public Guid Id { get; } = Guid.NewGuid();
