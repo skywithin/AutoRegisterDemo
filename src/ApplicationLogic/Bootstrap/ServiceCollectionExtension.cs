@@ -1,5 +1,4 @@
-﻿using Common.Bootstrap;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace ApplicationLogic.Bootstrap;
 
