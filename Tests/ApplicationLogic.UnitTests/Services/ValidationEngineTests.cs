@@ -10,7 +10,7 @@ internal class ValidationEngineTests : UnitTestContext<ValidationEngine>
     public void Execute_Should_Execute_Every_Supplied_Validator()
     {
         // Arrange
-        var context = new ValidationContext();
+        var context = new ValidationContext(input: "test");
 
         GetMockFor<IServiceProvider>()
             .Setup(x => x.GetService(typeof(IEnumerable<IValidator>)))
