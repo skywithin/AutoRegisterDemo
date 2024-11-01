@@ -1,6 +1,5 @@
 using ApplicationLogic.Services.Validation;
-using AutoRegisterDemoWebApp.Models;
-using Common.Extensions.Datetime;
+using AutoRegisterDemoWebApp.Converters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoRegisterDemoWebApp.Controllers;
@@ -19,13 +18,6 @@ public class HomeController : Controller
 
         _validationEngine.Execute(validationContext);
 
-        var viewModel =
-            validationContext.CompletedValidations
-                .Select(x =>
-                    new CompletedValidationModel(
-                        Message: $"{x.Timestamp.ToHHMMSS()}: {x.Message} (ID: {x.Id})"))
-                .ToList();
-
-        return View(viewModel);
+        return View(validationContext.CompletedValidations.ToCompletedValidationModels());
     }
 }
