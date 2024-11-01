@@ -1,12 +1,14 @@
-﻿@{
+﻿@using AutoRegisterDemoWebApp.Models
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-@model List<string>
+@model IEnumerable<CompletedValidationModel>
 
 <div class="text-center">
-    @foreach(var msg in Model)
+    @foreach(var validation in Model)
     {
-        <p>@msg</p>
+        <p>@validation.Message</p>
     }
 </div>

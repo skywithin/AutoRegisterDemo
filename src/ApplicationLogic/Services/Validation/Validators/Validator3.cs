@@ -1,5 +1,4 @@
 ﻿using Common.Attributes;
-using Common.Extensions.Datetime;
 
 namespace ApplicationLogic.Services.Validation.Validators;
 
@@ -11,9 +10,8 @@ internal class Validator3 : IValidator
 
     public void Validate(ValidationContext validationContext)
     {
-        var timestamp = DateTime.Now.ToHHMMSS();
+        var message = $"{Name} executed as Scoped";
 
-        validationContext.AddCompletedValidation(
-            $"{timestamp}: {Name} (ID: {Id}) executed (Scoped)");
+        validationContext.AddCompletedValidation(Id, message);
     }
 }
