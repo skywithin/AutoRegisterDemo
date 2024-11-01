@@ -1,3 +1,6 @@
 ﻿namespace AutoRegisterDemoWebApp.Models;
 
-public record CompletedValidationModel(string Message);
+public record CompletedValidationModel(
+    bool Result,
+    string Message
+);

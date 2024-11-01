@@ -17,8 +17,8 @@ internal class ValidationEngineTests : UnitTestContext<ValidationEngine>
             .Returns(
                 new List<IValidator>
                 { 
-                    new Validator1(),
-                    new Validator2(),
+                    new LengthCheckValidator(),
+                    new UpperCaseValidator(),
                 });
 
         // Act

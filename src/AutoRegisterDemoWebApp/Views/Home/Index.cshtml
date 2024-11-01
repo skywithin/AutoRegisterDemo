@@ -9,6 +9,6 @@
 <div class="text-center">
     @foreach(var validation in Model)
     {
-        <p>@validation.Message</p>
+        <p class ="@(validation.Result ? "text-success" : "text-danger")">@validation.Message</p>
     }
 </div>
