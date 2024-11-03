@@ -12,14 +12,12 @@ internal class ValidationEngineTests : UnitTestContext<ValidationEngine>
         // Arrange
         var context = new ValidationContext(input: "test");
 
-        GetMockFor<IServiceProvider>()
-            .Setup(x => x.GetService(typeof(IEnumerable<IValidator>)))
-            .Returns(
-                new List<IValidator>
-                { 
-                    new LengthCheckValidator(),
-                    new UpperCaseValidator(),
-                });
+        InjectMock<IEnumerable<IValidator>>(
+            new List<IValidator>
+            {
+                new LengthCheckValidator(),
+                new UpperCaseValidator(),
+            });
 
         // Act
         Sut.Execute(context);

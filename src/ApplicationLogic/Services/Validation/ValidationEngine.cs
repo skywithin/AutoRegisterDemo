@@ -1,6 +1,5 @@
 ﻿using ApplicationLogic.Services.Validation.Validators;
 using Common.Attributes;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace ApplicationLogic.Services.Validation;
 
@@ -14,9 +13,9 @@ internal class ValidationEngine : IValidationEngine
 {
     private readonly IEnumerable<IValidator> _validators;
 
-    public ValidationEngine(IServiceProvider serviceProvider)
+    public ValidationEngine(IEnumerable<IValidator> validators)
     {
-        _validators = serviceProvider.GetServices<IValidator>();
+        _validators = validators;
     }
 
     public ValidationContext Execute(ValidationContext context)
