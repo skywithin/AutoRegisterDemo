@@ -1,0 +1,20 @@
+<Project>
+
+  <PropertyGroup>
+    <LangVersion>13.0</LangVersion>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RestorePackagesWithLockFile>false</RestorePackagesWithLockFile>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <NuGetAuditMode>all</NuGetAuditMode>
+    <NuGetAuditLevel>low</NuGetAuditLevel>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+  
+</Project>
