@@ -1,0 +1,12 @@
+﻿using System.Reflection;
+
+namespace Demo.Web.Api.Properties;
+
+public class AssemblyReference
+{
+    // This class is used to reference the assembly 
+    // and to make it visible to other assemblies
+    // such as tests or other projects
+
+    public static Assembly Assembly => typeof(AssemblyReference).Assembly;
+}
