@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Demo.SharedKernel.Properties;
+namespace Demo.SharedKernel;
 
 public class AssemblyReference
 {

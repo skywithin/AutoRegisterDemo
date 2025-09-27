@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Demo.Web.Api.Properties;
+namespace Demo.Web.Api;
 
 public class AssemblyReference
 {

@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Demo.Domain.Properties;
+namespace Demo.Domain;
 
 public class AssemblyReference
 {
