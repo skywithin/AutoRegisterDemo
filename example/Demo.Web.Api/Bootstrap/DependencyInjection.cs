@@ -11,21 +11,8 @@ internal static class DependencyInjection
     public static IServiceCollection AddDemoApiServices(this IServiceCollection services)
     {
         services
-            .AddHttpClient()
             .AddEndpointsApiExplorer()
-            .AddMemoryCache()
-            .AddApiHealthChecks();
-            //.AddDbContext<MyDbContext>();
-
-        // Add controllers with exception filter
-        services
-            .AddControllers(options =>
-            {
-                //options.Filters.Add<ApiExceptionFilter>();
-            });
-
-        // Add CORS
-        services.AddApiCors();
+            .AddControllers();
 
         // Add Swagger
         services.AddApiSwagger();
