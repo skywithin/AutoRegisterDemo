@@ -6,10 +6,10 @@ namespace Demo.Domain.Bootstrap;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddDomain(this IServiceCollection services)
+    public static IServiceCollection AddDemoDomain(this IServiceCollection services)
     {
         services
-            .AddKernel()
+            .AddDemoKernel()
             .AddAutoRegisteredServicesFromAssembly(AssemblyReference.Assembly);
 
         return services;

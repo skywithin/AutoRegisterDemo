@@ -5,7 +5,7 @@ namespace Demo.SharedKernel.Bootstrap;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddKernel(this IServiceCollection services)
+    public static IServiceCollection AddDemoKernel(this IServiceCollection services)
     {
         services.AddAutoRegisteredServicesFromAssembly(AssemblyReference.Assembly);
 

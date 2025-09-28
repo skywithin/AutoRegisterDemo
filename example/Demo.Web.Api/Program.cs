@@ -1,3 +1,6 @@
+using Demo.Web.Api.Bootstrap;
+using Serilog;
+
 namespace Demo.Web.Api;
 
 public class Program
@@ -6,26 +9,19 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
+        builder.Host
+            .UseSerilog((context, provider, loggerConfiguration) =>
+            {
+                loggerConfiguration
+                    .ReadFrom.Configuration(context.Configuration)
+                    .Enrich.FromLogContext();
+            });
 
-        builder.Services.AddControllers();
-        // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-        builder.Services.AddOpenApi();
+        builder.Services.AddDemoApiServices();
 
         var app = builder.Build();
 
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.MapOpenApi();
-        }
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
-
-        app.MapControllers();
+        app.ConfigureApiMiddleware();
 
         app.Run();
     }
