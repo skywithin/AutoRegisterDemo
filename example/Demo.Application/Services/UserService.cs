@@ -1,27 +1,20 @@
 using AutoRegister.DI;
-using Demo.Web.Api.Models;
+using Demo.Domain.Abstractions;
+using Demo.Domain.Dtos;
+using Demo.Domain.Models;
+using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations;
 
-namespace Demo.Web.Api.Services;
+namespace Demo.Application.Services;
 
-/// <summary>
-/// Implementation of user service with in-memory storage
-/// </summary>
 [AutoRegister(Lifetime.Scoped, RegisterAs.Interface)]
-public class UserService : IUserService
+internal sealed class UserService(
+    IUserDataProvider userDataProvider,
+    ILogger<UserService> logger) : IUserService
 {
-    private readonly List<User> _users = new();
-    private readonly ILogger<UserService> _logger;
+    private readonly ILogger<UserService> _logger = logger;
+    private readonly IUserDataProvider _userDataProvider = userDataProvider;
 
-    /// <summary>
-    /// Initializes a new instance of the UserService
-    /// </summary>
-    /// <param name="logger">Logger instance</param>
-    public UserService(ILogger<UserService> logger)
-    {
-        _logger = logger;
-        SeedData();
-    }
 
     /// <summary>
     /// Gets all users
@@ -32,7 +25,7 @@ public class UserService : IUserService
         
         await Task.Delay(50); // Simulate async operation
         
-        var users = _users.AsQueryable();
+        var users = _userDataProvider.Users.AsQueryable();
         
         if (!includeInactive)
         {
@@ -51,7 +44,7 @@ public class UserService : IUserService
         
         await Task.Delay(30); // Simulate async operation
         
-        var user = _users.FirstOrDefault(u => u.Id == id);
+        var user = _userDataProvider.Users.FirstOrDefault(u => u.Id == id);
         return user != null ? MapToResponse(user) : null;
     }
 
@@ -64,7 +57,7 @@ public class UserService : IUserService
         
         await Task.Delay(30); // Simulate async operation
         
-        var user = _users.FirstOrDefault(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+        var user = _userDataProvider.Users.FirstOrDefault(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
         return user != null ? MapToResponse(user) : null;
     }
 
@@ -76,7 +69,7 @@ public class UserService : IUserService
         _logger.LogInformation("Creating user with email: {Email}", request.Email);
         
         // Validate email uniqueness
-        if (_users.Any(u => u.Email.Equals(request.Email, StringComparison.OrdinalIgnoreCase)))
+        if (_userDataProvider.Users.Any(u => u.Email.Equals(request.Email, StringComparison.OrdinalIgnoreCase)))
         {
             throw new ValidationException($"User with email '{request.Email}' already exists.");
         }
@@ -95,7 +88,7 @@ public class UserService : IUserService
             CreatedAt = DateTime.UtcNow
         };
 
-        _users.Add(user);
+        _userDataProvider.Users.Add(user);
         
         _logger.LogInformation("User created successfully with ID: {UserId}", user.Id);
         
@@ -109,7 +102,7 @@ public class UserService : IUserService
     {
         _logger.LogInformation("Updating user with ID: {UserId}", id);
         
-        var user = _users.FirstOrDefault(u => u.Id == id);
+        var user = _userDataProvider.Users.FirstOrDefault(u => u.Id == id);
         if (user == null)
         {
             _logger.LogWarning("User not found with ID: {UserId}", id);
@@ -119,7 +112,7 @@ public class UserService : IUserService
         // Validate email uniqueness if email is being changed
         if (!string.IsNullOrEmpty(request.Email) && 
             !request.Email.Equals(user.Email, StringComparison.OrdinalIgnoreCase) &&
-            _users.Any(u => u.Id != id && u.Email.Equals(request.Email, StringComparison.OrdinalIgnoreCase)))
+            _userDataProvider.Users.Any(u => u.Id != id && u.Email.Equals(request.Email, StringComparison.OrdinalIgnoreCase)))
         {
             throw new ValidationException($"User with email '{request.Email}' already exists.");
         }
@@ -159,7 +152,7 @@ public class UserService : IUserService
     {
         _logger.LogInformation("Deleting user with ID: {UserId}", id);
         
-        var user = _users.FirstOrDefault(u => u.Id == id);
+        var user = _userDataProvider.Users.FirstOrDefault(u => u.Id == id);
         if (user == null)
         {
             _logger.LogWarning("User not found with ID: {UserId}", id);
@@ -168,7 +161,7 @@ public class UserService : IUserService
 
         await Task.Delay(50); // Simulate async operation
 
-        _users.Remove(user);
+        _userDataProvider.Users.Remove(user);
         
         _logger.LogInformation("User deleted successfully with ID: {UserId}", id);
         
@@ -186,7 +179,7 @@ public class UserService : IUserService
         
         var searchTermLower = searchTerm.ToLowerInvariant();
         
-        var matchingUsers = _users.Where(u => 
+        var matchingUsers = _userDataProvider.Users.Where(u => 
             u.FirstName.ToLowerInvariant().Contains(searchTermLower) ||
             u.LastName.ToLowerInvariant().Contains(searchTermLower) ||
             u.Email.ToLowerInvariant().Contains(searchTermLower) ||
@@ -210,47 +203,5 @@ public class UserService : IUserService
         };
     }
 
-    private void SeedData()
-    {
-        var seedUsers = new List<User>
-        {
-            new User
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "John",
-                LastName = "Doe",
-                Email = "john.doe@example.com",
-                PhoneNumber = "+1-555-0123",
-                DateOfBirth = new DateTime(1990, 5, 15),
-                IsActive = true,
-                CreatedAt = DateTime.UtcNow.AddDays(-30)
-            },
-            new User
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "Jane",
-                LastName = "Smith",
-                Email = "jane.smith@example.com",
-                PhoneNumber = "+1-555-0456",
-                DateOfBirth = new DateTime(1985, 8, 22),
-                IsActive = true,
-                CreatedAt = DateTime.UtcNow.AddDays(-15)
-            },
-            new User
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "Bob",
-                LastName = "Johnson",
-                Email = "bob.johnson@example.com",
-                PhoneNumber = "+1-555-0789",
-                DateOfBirth = new DateTime(1992, 12, 3),
-                IsActive = false,
-                CreatedAt = DateTime.UtcNow.AddDays(-5),
-                UpdatedAt = DateTime.UtcNow.AddDays(-1)
-            }
-        };
-
-        _users.AddRange(seedUsers);
-        _logger.LogInformation("Seeded {Count} users", seedUsers.Count);
-    }
+    
 }

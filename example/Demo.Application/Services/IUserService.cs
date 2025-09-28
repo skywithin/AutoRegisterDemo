@@ -1,6 +1,6 @@
-using Demo.Web.Api.Models;
+using Demo.Domain.Dtos;
 
-namespace Demo.Web.Api.Services;
+namespace Demo.Application.Services;
 
 /// <summary>
 /// Service for managing users

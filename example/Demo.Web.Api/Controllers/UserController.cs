@@ -1,27 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
 using Demo.Web.Api.Models;
-using Demo.Web.Api.Services;
 using System.ComponentModel.DataAnnotations;
+using Demo.Application.Services;
+using Demo.Domain.Dtos;
 
 namespace Demo.Web.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UserController : ControllerBase
+public class UserController(
+    IUserService userService,
+    ILogger<UserController> logger) : ControllerBase
 {
-    private readonly IUserService _userService;
-    private readonly ILogger<UserController> _logger;
-
-    /// <summary>
-    /// Initializes a new instance of the UserController
-    /// </summary>
-    /// <param name="userService">User service instance</param>
-    /// <param name="logger">Logger instance</param>
-    public UserController(IUserService userService, ILogger<UserController> logger)
-    {
-        _userService = userService;
-        _logger = logger;
-    }
+    private readonly IUserService _userService = userService;
+    private readonly ILogger<UserController> _logger = logger;
 
     [HttpGet]
     public async Task<IActionResult> GetAllUsers([FromQuery] bool includeInactive = false)

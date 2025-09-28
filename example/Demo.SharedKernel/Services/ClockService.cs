@@ -1,6 +1,6 @@
 ﻿using AutoRegister.DI;
 
-namespace Demo.SharedKernel;
+namespace Demo.SharedKernel.Services;
 
 public interface IClockService
 {
@@ -8,7 +8,7 @@ public interface IClockService
 }
 
 [AutoRegister(Lifetime.Scoped, RegisterAs.Interface)]
-public class ClockService : IClockService
+internal sealed class ClockService : IClockService
 {
-    public virtual DateTime UtcNow => DateTime.UtcNow;
+    public DateTime UtcNow => DateTime.UtcNow;
 }
